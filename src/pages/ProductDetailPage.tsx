@@ -8,6 +8,7 @@ import { useAppDispatch } from "../store/hooks";
 import { addToCart } from "../store/cart/cartSlice";
 import { formatPriceInr } from "../utils/currency";
 import { buildCartItem } from "../utils/cart";
+import { PRODUCT_DETAIL_STRINGS, PRODUCT_CARD_STRINGS } from "../constants/constants";
 import "./ProductDetailPage.css";
 
 export default function ProductDetailPage() {
@@ -48,13 +49,13 @@ export default function ProductDetailPage() {
     return (
       <div className="product-detail-page container mt-4">
         <div className="detail-empty-state">
-          <h2 className="h4 mb-2">Product not found</h2>
+          <h2 className="h4 mb-2">{PRODUCT_DETAIL_STRINGS.PRODUCT_NOT_FOUND}</h2>
           <p className="text-muted mb-3">
-            The requested product id is missing.
+            {PRODUCT_DETAIL_STRINGS.MISSING_ID}
           </p>
           <Link className="detail-secondary-link" to="/">
             <AppIcon name="arrow-left" />
-            Back to catalog
+            {PRODUCT_DETAIL_STRINGS.BACK_TO_CATALOG}
           </Link>
         </div>
       </div>
@@ -93,13 +94,13 @@ export default function ProductDetailPage() {
     return (
       <div className="product-detail-page container mt-4">
         <div className="detail-empty-state">
-          <h2 className="h4 mb-2">Unable to load product</h2>
+          <h2 className="h4 mb-2">{PRODUCT_DETAIL_STRINGS.UNABLE_TO_LOAD}</h2>
           <p className="text-muted mb-3">
-            We couldn't load this product right now.
+            {PRODUCT_DETAIL_STRINGS.LOAD_ERROR_DESC}
           </p>
           <Link className="detail-secondary-link" to="/">
             <AppIcon name="arrow-left" />
-            Back to catalog
+            {PRODUCT_DETAIL_STRINGS.BACK_TO_CATALOG}
           </Link>
         </div>
       </div>
@@ -108,7 +109,7 @@ export default function ProductDetailPage() {
 
   const handleAddToCart = () => {
     dispatch(addToCart(buildCartItem(product)));
-    toast.success(`${product.title} added to cart`, {
+    toast.success(PRODUCT_CARD_STRINGS.ADDED_TO_CART_TOAST(product.title), {
       toastId: `cart-${product.id}`,
     });
   };
@@ -161,7 +162,7 @@ export default function ProductDetailPage() {
                   />
                   <span className="detail-zoom-hint">
                     <AppIcon name="magnifying-glass" />
-                    {isZoomed ? "Move to inspect" : "Hover to zoom"}
+                    {isZoomed ? PRODUCT_DETAIL_STRINGS.ZOOM_HINT : PRODUCT_DETAIL_STRINGS.HOVER_HINT}
                   </span>
                 </>
               ) : (
@@ -199,20 +200,20 @@ export default function ProductDetailPage() {
               {product.rating !== undefined && (
                 <span className="detail-pill">
                   <AppIcon name="star" />
-                  {product.rating.toFixed(1)} rating
+                  {product.rating.toFixed(1)} {PRODUCT_DETAIL_STRINGS.RATING}
                 </span>
               )}
 
               {(product.availabilityStatus || product.stock !== undefined) && (
                 <span className="detail-pill">
                   <AppIcon name="box-open" />
-                  {product.availabilityStatus ?? `${product.stock} in stock`}
+                  {product.availabilityStatus ?? `${product.stock} ${PRODUCT_DETAIL_STRINGS.IN_STOCK}`}
                 </span>
               )}
             </div>
 
             <p className="detail-category">
-              {product.brand ?? "Featured Product"}
+              {product.brand ?? PRODUCT_DETAIL_STRINGS.FEATURED_PRODUCT}
             </p>
 
             <h1 className="detail-title">{product.title}</h1>
@@ -226,20 +227,20 @@ export default function ProductDetailPage() {
                 {formatPriceInr(originalPrice)}
               </span>
               <span className="detail-price-discount">
-                Save {Math.round(product.discountPercentage)}%
+                {PRODUCT_DETAIL_STRINGS.SAVE} {Math.round(product.discountPercentage)}%
               </span>
             </div>
 
             <div className="detail-meta-grid">
               <div className="detail-meta-card">
-                <span className="detail-meta-label">Category</span>
+                <span className="detail-meta-label">{PRODUCT_DETAIL_STRINGS.CATEGORY}</span>
                 <span className="detail-meta-value">{product.category}</span>
               </div>
 
               <div className="detail-meta-card">
-                <span className="detail-meta-label">Availability</span>
+                <span className="detail-meta-label">{PRODUCT_DETAIL_STRINGS.AVAILABILITY}</span>
                 <span className="detail-meta-value">
-                  {product.availabilityStatus ?? `${product.stock ?? 0} units`}
+                  {product.availabilityStatus ?? `${product.stock ?? 0} ${PRODUCT_DETAIL_STRINGS.UNITS}`}
                 </span>
               </div>
             </div>
@@ -251,18 +252,18 @@ export default function ProductDetailPage() {
                 onClick={handleAddToCart}
               >
                 <AppIcon name="cart-plus" />
-                Add to cart
+                {PRODUCT_DETAIL_STRINGS.ADD_TO_CART}
               </button>
 
               <Link className="detail-secondary-link" to="/">
                 <AppIcon name="store" />
-                Continue shopping
+                {PRODUCT_DETAIL_STRINGS.CONTINUE_SHOPPING}
               </Link>
             </div>
           </div>
 
           <div className="detail-description-card">
-            <h2 className="detail-section-title">About this product</h2>
+            <h2 className="detail-section-title">{PRODUCT_DETAIL_STRINGS.ABOUT_PRODUCT}</h2>
             <p className="detail-copy mb-0">{product.description}</p>
           </div>
         </div>

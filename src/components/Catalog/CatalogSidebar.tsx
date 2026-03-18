@@ -2,6 +2,7 @@ import type { ChangeEvent } from "react";
 import AppIcon from "../icon/AppIcon";
 import CatalogFilterSection from "./CatalogFilterSection";
 import { formatPriceInr } from "../../utils/currency";
+import { CATALOG_SIDEBAR_STRINGS, PRODUCT_LIST_STRINGS } from "../../constants/constants";
 
 type CatalogSidebarProps = {
   catalogMaxPrice: number;
@@ -41,18 +42,18 @@ export default function CatalogSidebar({
       <div className="filter-panel">
         <div className="filter-panel-header">
           <div>
-            <span className="filter-eyebrow">Refine catalog</span>
-            <h3 className="filter-title">Filter</h3>
+            <span className="filter-eyebrow">{CATALOG_SIDEBAR_STRINGS.REFINE_CATALOG}</span>
+            <h3 className="filter-title">{CATALOG_SIDEBAR_STRINGS.FILTER}</h3>
           </div>
 
-          <span className="filter-advanced">Advanced</span>
+          <span className="filter-advanced">{CATALOG_SIDEBAR_STRINGS.ADVANCED}</span>
         </div>
 
         <CatalogFilterSection
-          title="Search"
+          title={CATALOG_SIDEBAR_STRINGS.SEARCH_TITLE}
           badge={
             isSearchUpdating ? (
-              <span className="filter-badge">Live</span>
+              <span className="filter-badge">{CATALOG_SIDEBAR_STRINGS.LIVE_BADGE}</span>
             ) : undefined
           }
         >
@@ -62,7 +63,7 @@ export default function CatalogSidebar({
             <input
               type="search"
               className="filter-input"
-              placeholder="Search the catalog..."
+              placeholder={PRODUCT_LIST_STRINGS.SEARCH_PLACEHOLDER}
               value={search}
               onChange={(event) => onSearchChange(event.target.value)}
             />
@@ -70,13 +71,13 @@ export default function CatalogSidebar({
 
           <p className="filter-helper">
             {isSearchUpdating
-              ? "Looking for matches..."
-              : "Results update while you type."}
+              ? CATALOG_SIDEBAR_STRINGS.SEARCH_HELPER_UPDATING
+              : CATALOG_SIDEBAR_STRINGS.SEARCH_HELPER_DEFAULT}
           </p>
         </CatalogFilterSection>
 
         <CatalogFilterSection
-          title="Price"
+          title={CATALOG_SIDEBAR_STRINGS.PRICE_TITLE}
           badge={
             <span className="filter-badge">
               {formatPriceInr(sliderMinPrice)} - {formatPriceInr(sliderMaxPrice)}
@@ -85,14 +86,14 @@ export default function CatalogSidebar({
         >
           <div className="price-overview">
             <div className="price-stat">
-              <span className="price-stat-label">From</span>
+              <span className="price-stat-label">{CATALOG_SIDEBAR_STRINGS.PRICE_FROM}</span>
               <span className="price-stat-value">
                 {formatPriceInr(sliderMinPrice)}
               </span>
             </div>
 
             <div className="price-stat">
-              <span className="price-stat-label">To</span>
+              <span className="price-stat-label">{CATALOG_SIDEBAR_STRINGS.PRICE_TO}</span>
               <span className="price-stat-value">
                 {formatPriceInr(sliderMaxPrice)}
               </span>
@@ -117,7 +118,7 @@ export default function CatalogSidebar({
                 step={1}
                 value={sliderMinPrice}
                 className="price-range-input"
-                aria-label="Minimum price"
+                aria-label={CATALOG_SIDEBAR_STRINGS.PRICE_ARIA_MIN}
                 onChange={onMinPriceChange}
                 disabled={isPriceRangeLocked}
               />
@@ -129,7 +130,7 @@ export default function CatalogSidebar({
                 step={1}
                 value={sliderMaxPrice}
                 className="price-range-input"
-                aria-label="Maximum price"
+                aria-label={CATALOG_SIDEBAR_STRINGS.PRICE_ARIA_MAX}
                 onChange={onMaxPriceChange}
                 disabled={isPriceRangeLocked}
               />
@@ -143,8 +144,8 @@ export default function CatalogSidebar({
         </CatalogFilterSection>
 
         <CatalogFilterSection
-          title="Discount"
-          badge={<span className="filter-badge">Popular</span>}
+          title={CATALOG_SIDEBAR_STRINGS.DISCOUNT_TITLE}
+          badge={<span className="filter-badge">{CATALOG_SIDEBAR_STRINGS.POPULAR_BADGE}</span>}
         >
           <button
             type="button"
@@ -157,9 +158,9 @@ export default function CatalogSidebar({
               </span>
 
               <span>
-                <span className="discount-title">10%+ off only</span>
+                <span className="discount-title">{CATALOG_SIDEBAR_STRINGS.DISCOUNT_OFF_TITLE}</span>
                 <span className="discount-subtitle">
-                  Only show items with 10% off or more.
+                  {CATALOG_SIDEBAR_STRINGS.DISCOUNT_OFF_SUBTITLE}
                 </span>
               </span>
             </span>

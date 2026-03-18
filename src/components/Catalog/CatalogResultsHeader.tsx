@@ -1,4 +1,5 @@
 import AppIcon from "../icon/AppIcon";
+import { CATALOG_RESULTS_HEADER } from "../../constants/constants";
 
 type CatalogResultsHeaderProps = {
   description: string;
@@ -27,7 +28,7 @@ export default function CatalogResultsHeader({
           onClick={onReset}
         >
           <AppIcon name="rotate-left" />
-          Reset filters
+          {CATALOG_RESULTS_HEADER.RESET_FILTERS}
         </button>
       ) : null}
     </div>

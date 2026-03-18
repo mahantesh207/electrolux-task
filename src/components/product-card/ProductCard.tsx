@@ -8,6 +8,7 @@ import { useAppDispatch } from "../../store/hooks";
 import { addToCart } from "../../store/cart/cartSlice";
 import { formatPriceInr } from "../../utils/currency";
 import { buildCartItem } from "../../utils/cart";
+import { PRODUCT_CARD_STRINGS } from "../../constants/constants";
 import "./ProductCard.css";
 
 type ProductCardProps = {
@@ -25,7 +26,7 @@ function ProductCard({ product }: ProductCardProps) {
     event.stopPropagation();
 
     dispatch(addToCart(buildCartItem(product)));
-    toast.success(`${product.title} added to cart`, {
+    toast.success(PRODUCT_CARD_STRINGS.ADDED_TO_CART_TOAST(product.title), {
       toastId: `cart-${product.id}`,
     });
   };
@@ -35,7 +36,7 @@ function ProductCard({ product }: ProductCardProps) {
       <article className="card h-100 product-card">
         <div className="product-image">
           <span className="badge bg-danger product-card-badge">
-            {Math.round(product.discountPercentage)}% OFF
+            {Math.round(product.discountPercentage)}% {PRODUCT_CARD_STRINGS.OFF}
           </span>
 
           {!imageLoaded && (
@@ -66,7 +67,7 @@ function ProductCard({ product }: ProductCardProps) {
           <h5 className="card-title product-card-title">{product.title}</h5>
 
           <p className="product-card-brand">
-            {product.brand ?? "Curated pick"}
+            {product.brand ?? PRODUCT_CARD_STRINGS.CURATED_PICK}
           </p>
 
           <div className="product-card-price">
@@ -84,7 +85,7 @@ function ProductCard({ product }: ProductCardProps) {
             className="btn btn-success btn-sm mt-auto product-card-button"
             onClick={handleAddToCart}
           >
-            <AppIcon name="cart-plus" /> Add to Cart
+            <AppIcon name="cart-plus" /> {PRODUCT_CARD_STRINGS.ADD_TO_CART}
           </button>
         </div>
       </article>

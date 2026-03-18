@@ -12,6 +12,7 @@ import {
   useInfiniteScroll,
   useProducts,
 } from "../hooks";
+import { PRODUCT_LIST_STRINGS } from "../constants/constants";
 import "./ProductListPage.css";
 
 const SEARCH_DEBOUNCE_MS = 400;
@@ -71,21 +72,21 @@ export default function ProductListPage() {
   };
 
   const resultsHeading = searchQuery
-    ? `${products.length} ${products.length === 1 ? "result" : "results"} for "${searchQuery}"`
-    : `${products.length} ${products.length === 1 ? "product" : "products"} ready to browse`;
+    ? PRODUCT_LIST_STRINGS.RESULTS_FOR(products.length, searchQuery)
+    : PRODUCT_LIST_STRINGS.READY_TO_BROWSE(products.length);
   const resultsLabel = searchQuery
-    ? `${totalResults} matches found for your search`
-    : "Use the filters to filter products further.";
+    ? PRODUCT_LIST_STRINGS.MATCHES_FOUND(totalResults)
+    : PRODUCT_LIST_STRINGS.USE_FILTERS;
   const showEmptyState =
     !isLoading &&
     !isFetching &&
     products.length === 0;
   const emptyStateTitle = hasActiveFilters
-    ? "No products found"
-    : "No products available";
+    ? PRODUCT_LIST_STRINGS.EMPTY_SEARCH_TITLE
+    : PRODUCT_LIST_STRINGS.EMPTY_DEFAULT_TITLE;
   const emptyStateDescription = hasActiveFilters
-    ? "Try another search or clear your filters."
-    : "Nothing to show right now. Check back soon.";
+    ? PRODUCT_LIST_STRINGS.EMPTY_SEARCH_DESC
+    : PRODUCT_LIST_STRINGS.EMPTY_DEFAULT_DESC;
   const isPriceRangeLocked = catalogMinPrice === catalogMaxPrice;
 
   const handleMinPriceChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -127,7 +128,7 @@ export default function ProductListPage() {
   }
 
   if (error) {
-    return <p>Error loading products</p>;
+    return <p>{PRODUCT_LIST_STRINGS.LOADING_ERROR}</p>;
   }
 
   return (

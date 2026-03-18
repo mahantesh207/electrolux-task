@@ -12,6 +12,7 @@ import {
   selectCartTotalQuantity,
 } from "../store/cart/cartSlice";
 import { formatPriceInr } from "../utils/currency";
+import { CART_STRINGS } from "../constants/constants";
 import "./CartPage.css";
 
 const SHIPPING_COST = 0;
@@ -25,7 +26,7 @@ export default function CartPage() {
 
   const handlePlaceOrder = () => {
     dispatch(clearCart());
-    toast.success("Thanks. Your order is in.", {
+    toast.success(CART_STRINGS.ORDER_PLACED_TOAST, {
       toastId: "order-placed",
     });
   };
@@ -37,32 +38,32 @@ export default function CartPage() {
           <span className="cart-empty-icon">
             <AppIcon name="basket-shopping" />
           </span>
-          <p className="cart-eyebrow">Nothing here yet</p>
-          <h1 className="cart-empty-title">Your cart is empty</h1>
+          <p className="cart-eyebrow">{CART_STRINGS.EMPTY_EYEBROW}</p>
+          <h1 className="cart-empty-title">{CART_STRINGS.EMPTY_TITLE}</h1>
           <p className="cart-empty-copy">
-            When you add something, it will show up here.
+            {CART_STRINGS.EMPTY_COPY}
           </p>
 
           <div className="cart-empty-highlights" aria-hidden="true">
             <span className="cart-empty-pill">
               <AppIcon className="cart-empty-pill-icon" name="sliders" />
-              Easy filters
+              {CART_STRINGS.HIGHLIGHT_FILTERS}
             </span>
 
             <span className="cart-empty-pill">
               <AppIcon className="cart-empty-pill-icon" name="bolt" />
-              Quick browse
+              {CART_STRINGS.HIGHLIGHT_BROWSE}
             </span>
 
             <span className="cart-empty-pill">
               <AppIcon className="cart-empty-pill-icon" name="bag-shopping" />
-              Add in one click
+              {CART_STRINGS.HIGHLIGHT_ADD}
             </span>
           </div>
 
           <Link className="cart-primary-link" to="/">
             <AppIcon name="arrow-left" />
-            Browse products
+            {CART_STRINGS.BROWSE_PRODUCTS}
           </Link>
         </div>
       </section>
@@ -73,10 +74,10 @@ export default function CartPage() {
     <section className="cart-page">
       <div className="cart-page-header">
         <div>
-          <p className="cart-eyebrow">Almost there</p>
-          <h1 className="cart-page-title">Your cart</h1>
+          <p className="cart-eyebrow">{CART_STRINGS.ALMOST_THERE}</p>
+          <h1 className="cart-page-title">{CART_STRINGS.YOUR_CART}</h1>
           <p className="cart-page-copy">
-            {totalQuantity} {totalQuantity === 1 ? "item" : "items"} in your bag.
+            {CART_STRINGS.ITEMS_IN_BAG(totalQuantity)}
           </p>
         </div>
 
@@ -86,7 +87,7 @@ export default function CartPage() {
           onClick={() => dispatch(clearCart())}
         >
           <AppIcon name="trash-can" />
-          Clear cart
+          {CART_STRINGS.CLEAR_CART}
         </button>
       </div>
 
@@ -113,12 +114,12 @@ export default function CartPage() {
                   <div className="cart-item-copy">
                     <div className="cart-item-meta">
                       <span className="cart-item-chip">
-                        {item.brand ?? item.category ?? "Catalog item"}
+                        {item.brand ?? item.category ?? CART_STRINGS.CATALOG_ITEM}
                       </span>
                       <button
                         type="button"
                         className="cart-remove-button"
-                        aria-label={`Remove ${item.title} from cart`}
+                        aria-label={CART_STRINGS.REMOVE_ARIA(item.title)}
                         onClick={() => dispatch(removeFromCart(item.id))}
                       >
                         <AppIcon name="xmark" />
@@ -130,18 +131,18 @@ export default function CartPage() {
                     </Link>
 
                     <p className="cart-item-copytext">
-                      Unit price {formatPriceInr(item.price)}
+                      {CART_STRINGS.UNIT_PRICE} {formatPriceInr(item.price)}
                     </p>
 
                     <div className="cart-item-footer">
                       <div
                         className="cart-quantity-control"
-                        aria-label={`Quantity controls for ${item.title}`}
+                        aria-label={CART_STRINGS.QUANTITY_CONTROLS_ARIA(item.title)}
                       >
                         <button
                           type="button"
                           className="cart-quantity-button"
-                          aria-label={`Decrease quantity for ${item.title}`}
+                          aria-label={CART_STRINGS.DEC_ARIA(item.title)}
                           onClick={() => dispatch(decrementQuantity(item.id))}
                         >
                           <AppIcon name="minus" />
@@ -154,7 +155,7 @@ export default function CartPage() {
                         <button
                           type="button"
                           className="cart-quantity-button"
-                          aria-label={`Increase quantity for ${item.title}`}
+                          aria-label={CART_STRINGS.INC_ARIA(item.title)}
                           onClick={() => dispatch(incrementQuantity(item.id))}
                         >
                           <AppIcon name="plus" />
@@ -175,29 +176,29 @@ export default function CartPage() {
         <div className="col-12 col-xl-4">
           <aside className="cart-summary-card">
             <div className="cart-summary-head">
-              <p className="cart-summary-eyebrow">Summary</p>
-              <h2 className="cart-summary-title">Order totals</h2>
+              <p className="cart-summary-eyebrow">{CART_STRINGS.SUMMARY_EYEBROW}</p>
+              <h2 className="cart-summary-title">{CART_STRINGS.ORDER_TOTALS}</h2>
             </div>
 
             <div className="cart-summary-rows">
               <div className="cart-summary-row">
-                <span>Subtotal</span>
+                <span>{CART_STRINGS.SUBTOTAL}</span>
                 <strong>{formatPriceInr(subtotal)}</strong>
               </div>
 
               <div className="cart-summary-row">
-                <span>Shipping</span>
-                <strong>{SHIPPING_COST === 0 ? "Free" : formatPriceInr(SHIPPING_COST)}</strong>
+                <span>{CART_STRINGS.SHIPPING}</span>
+                <strong>{SHIPPING_COST === 0 ? CART_STRINGS.FREE : formatPriceInr(SHIPPING_COST)}</strong>
               </div>
 
               <div className="cart-summary-row is-total">
-                <span>Total</span>
+                <span>{CART_STRINGS.TOTAL}</span>
                 <strong>{formatPriceInr(total)}</strong>
               </div>
             </div>
 
             <p className="cart-summary-note">
-              Prices are in INR. Final charges will show at checkout.
+              {CART_STRINGS.NOTE}
             </p>
 
             <div className="cart-summary-actions">
@@ -207,12 +208,12 @@ export default function CartPage() {
                 onClick={handlePlaceOrder}
               >
                 <AppIcon name="bag-shopping" />
-                Place order
+                {CART_STRINGS.PLACE_ORDER}
               </button>
 
               <Link className="cart-outline-link" to="/">
                 <AppIcon name="arrow-left" />
-                Continue shopping
+                {CART_STRINGS.CONTINUE_SHOPPING}
               </Link>
             </div>
           </aside>
