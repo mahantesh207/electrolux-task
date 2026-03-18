@@ -144,7 +144,7 @@ export default function ProductListPage() {
             onDiscountToggle={() => setDiscountOnly((current) => !current)}
             onMaxPriceChange={handleMaxPriceChange}
             onMinPriceChange={handleMinPriceChange}
-            onSearchChange={(nextValue) => {
+            onSearchChange={(nextValue: string) => {
               startTransition(() => {
                 setSearch(nextValue);
               });
